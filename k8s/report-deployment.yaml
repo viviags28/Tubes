@@ -1,38 +1,33 @@
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: report-service
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: report-service
-  template:
-    metadata:
-      labels:
-        app: report-service
-    spec:
-      containers:
-      - name: report-service
-        image: viviags/report-service:latest
-        ports:
-        - containerPort: 8083
-        env:
-        - name: DB_HOST
-          value: mysql
-        - name: DB_PORT
-          value: "3306"
-
----
 apiVersion: v1
 kind: Service
 metadata:
-  name: report-service
+  name: mysql
+spec:
+  ports:
+    - port: 3306
+  selector:
+    app: mysql
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
 spec:
   selector:
-    app: report-service
-  ports:
-    - protocol: TCP
-      port: 8083
-      targetPort: 8083
-  type: NodePort
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: root
+        - name: MYSQL_DATABASE
+          value: tubesdb
+        ports:
+        - containerPort: 3306
