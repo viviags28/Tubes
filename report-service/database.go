@@ -16,9 +16,9 @@ func ConnectDB() {
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 
-	// default untuk local (Windows)
+	// default untuk local / test
 	if host == "" {
-		host = "mysql"
+		host = "localhost"
 	}
 
 	if port == "" {
@@ -47,7 +47,6 @@ func ConnectDB() {
 		}
 
 		fmt.Println("Waiting MySQL...", err)
-
 		time.Sleep(5 * time.Second)
 	}
 
