@@ -49,6 +49,4 @@ func ConnectDB() {
 		fmt.Println("Waiting MySQL...", err)
 		time.Sleep(5 * time.Second)
 	}
-
-	panic(err)
 }
