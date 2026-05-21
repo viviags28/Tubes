@@ -1,0 +1,55 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Unit Tests') {
+            steps {
+                bat 'go test ./...'
+            }
+        }
+
+        stage('Lint Vet') {
+            steps {
+                bat 'go vet ./...'
+            }
+        }
+
+        stage('Build Image') {
+            steps {
+                bat 'docker compose build'
+            }
+        }
+
+        stage('Functional Tests') {
+            steps {
+                bat 'docker compose up -d'
+                bat 'go test -v -tags=functional ./...'
+            }
+        }
+
+        stage('Push Image') {
+            steps {
+                echo 'Push image nanti di sini'
+            }
+        }
+
+        stage('Deploy Kubernetes') {
+            steps {
+                echo 'Deploy kubernetes nanti di sini'
+            }
+        }
+
+        stage('Verify') {
+            steps {
+                echo 'Verify deployment nanti di sini'
+            }
+        }
+    }
+}
