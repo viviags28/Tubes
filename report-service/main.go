@@ -5,18 +5,16 @@ import (
 	"net/http"
 )
 
-func main() {
+type MySQLReportRepository struct {
+	db *sql.DB
+}
 
-	ConnectDB()
-
-	repo := MySQLReportRepository{db: DB}
-
-	svc := NewReportService(repo)
-	h := NewReportHandler(svc)
-
-	http.HandleFunc("/report/daily", h.DailyReport)
-
-	log.Println("Report service running on :8083")
-
-	log.Fatal(http.ListenAndServe(":8083", nil))
+func (r MySQLReportRepository) GetDailyReport(ctx context.Context, date string) (*DailyReport, error) {
+	return &DailyReport{
+		TotalPaket:  10,
+		Delivered:   8,
+		Pending:     1,
+		Terlambat:   1,
+		RataRataETA: 2.5,
+	}, nil
 }
