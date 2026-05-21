@@ -17,6 +17,12 @@ spec:
         image: viviags/report-service:latest
         ports:
         - containerPort: 8083
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_PORT
+          value: "3306"
+
 ---
 apiVersion: v1
 kind: Service
