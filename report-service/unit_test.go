@@ -2,24 +2,21 @@ package main
 
 import (
 	"context"
-	"database/sql"
 	"testing"
 )
 
 func TestGetDailyReport_ShouldReturnReport(t *testing.T) {
 
-	svc := NewReportService(&sql.DB{})
+	repo := MockReportRepo{}
+	svc := NewReportService(repo)
 
-	report, err := svc.GetDailyReport(
-		context.Background(),
-		"2026-04-25",
-	)
-
-	if report == nil {
-		t.Errorf("Expected report not nil, got nil")
-	}
+	report, err := svc.GetDailyReport(context.Background(), "2026-04-25")
 
 	if err != nil {
 		t.Errorf("Expected no error, got %v", err)
+	}
+
+	if report.TotalPaket == 0 {
+		t.Errorf("Expected TotalPaket > 0")
 	}
 }
