@@ -6,18 +6,16 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	"os"
 	"testing"
 )
 
 func TestDailyReportEndpoint_ReturnsOK(t *testing.T) {
 
-	os.Setenv("DB_HOST", "localhost")
-	os.Setenv("DB_PORT", "3306")
+	// ❌ HAPUS TOTAL DB
+	// ConnectDB()
 
-	ConnectDB()
-
-	svc := NewReportService(DB)
+	// ✔ pakai service tanpa DB
+	svc := NewReportService(nil)
 
 	h := NewReportHandler(svc)
 
@@ -36,14 +34,13 @@ func TestDailyReportEndpoint_ReturnsOK(t *testing.T) {
 	}
 
 	var report DailyReport
-
 	err := json.NewDecoder(w.Body).Decode(&report)
 
 	if err != nil {
-		t.Errorf("Failed to decode: %v", err)
+		t.Errorf("Decode error: %v", err)
 	}
 
 	if report.TotalPaket == 0 {
-		t.Errorf("Expected TotalPaket > 0, got 0")
+		t.Errorf("Expected data > 0")
 	}
 }
