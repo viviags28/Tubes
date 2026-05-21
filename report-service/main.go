@@ -9,7 +9,9 @@ func main() {
 
 	ConnectDB()
 
-	svc := NewReportService(DB)
+	repo := MySQLReportRepository{db: DB}
+
+	svc := NewReportService(repo)
 	h := NewReportHandler(svc)
 
 	http.HandleFunc("/report/daily", h.DailyReport)
