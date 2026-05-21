@@ -11,11 +11,8 @@ import (
 
 func TestDailyReportEndpoint_ReturnsOK(t *testing.T) {
 
-	// ❌ HAPUS TOTAL DB
-	// ConnectDB()
-
-	// ✔ pakai service tanpa DB
-	svc := NewReportService(nil)
+	repo := MySQLReportRepository{db: DB}
+	svc := NewReportService(repo)
 
 	h := NewReportHandler(svc)
 
