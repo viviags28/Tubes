@@ -6,10 +6,14 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"testing"
 )
 
 func TestDailyReportEndpoint_ReturnsOK(t *testing.T) {
+
+	os.Setenv("DB_HOST", "localhost")
+	os.Setenv("DB_PORT", "3306")
 
 	ConnectDB()
 
