@@ -2,22 +2,24 @@ package main
 
 import (
 	"context"
-	"database/sql"
 )
 
-type ReportService struct {
-	db *sql.DB
+type ReportRepository interface {
+	GetDailyReport(ctx context.Context, date string) (*DailyReport, error)
 }
 
-func NewReportService(db *sql.DB) *ReportService {
+type ReportService struct {
+	repo ReportRepository
+}
+
+func NewReportService(repo ReportRepository) *ReportService {
 	return &ReportService{
-		db: db,
+		repo: repo,
 	}
 }
 
 func (s *ReportService) GetDailyReport(ctx context.Context, date string) (*DailyReport, error) {
 
-	// sementara dummy data dulu
 	return &DailyReport{
 		TotalPaket:  10,
 		Delivered:   8,
