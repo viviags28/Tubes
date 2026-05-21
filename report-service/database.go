@@ -16,9 +16,9 @@ func ConnectDB() {
 	host := os.Getenv("DB_HOST")
 	port := os.Getenv("DB_PORT")
 
-	// kalau dijalankan di Windows/local
+	// default untuk local (Windows)
 	if host == "" {
-		host = "localhost"
+		host = "mysql"
 	}
 
 	if port == "" {
